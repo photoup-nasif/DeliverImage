@@ -1,7 +1,7 @@
 PhotoUp DeliverImage API V1.0.0
 
-* [Introduction to Restful API
-endpoints](#introduction-to-restful-api-endpoints)
+* [Connecting Third Party and PhotoUp Accounts](#connecting-third-party-and-photoup-accounts)
+* [Introduction to Restful API endpoints](#introduction-to-restful-api-endpoints)
 * [Introduction to DeliverImage API](#introduction-to-deliverimage-api)
 * [Authentication](#authentication)
 * [Request and Response](#request-and-response)
@@ -10,6 +10,15 @@ endpoints](#introduction-to-restful-api-endpoints)
 * [Parameter Objects](#parameter-objects)
 * [Third Party Endpoint Requirements](#third-party-endpoint-requirements)
 * [Third Party Duplicate Image Protocols](#third-party-duplicate-image-protocol)
+
+#### Connecting Third Party and PhotoUp Accounts
+Clients will login into PhotoUp account and they can link the two accounts once inside PhotoUp. The steps will be as follows
+1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup?pk=somecharacter&sk=somecharacter```
+    1. PhotoUp will add a get variables pk and sk in the link. This is the one time Public key and Private key for each Client.
+    2. PhotoUp will only save the pk and sk once the link of two accounts is successful.
+    	1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /signup and also add the pk and sk in the payload.
+    	2. When the client choose to login, once logged in, the third party also needs to call PUT/signup to inform PhotoUp that the third party got the request and linked the account. 
+    3. When the third party has successfully called the PUT /signup, PhotoUp will then close the third party page from no. 1 above and proceed to Delivery form.
 
 #### Introduction to Restful API endpoints
 Endpoints can be access with http verbs: GET, POST, PUT, and DELETE
@@ -20,17 +29,12 @@ Endpoints can be access with http verbs: GET, POST, PUT, and DELETE
 - DELETE /home/1 (delete home with id = 1)
 
 #### Introduction to DeliverImage API
-This API is a guide and a requirement for the third party service
-provider so that PhotoUp can upload images directly to the third party
-platform. For Delivery image purposes this API version utilizes or
-supports only GET POST and PUT methods.
+This API is a guide and a requirement for the third party service  provider so that PhotoUp can upload images directly to the third party platform. For Delivery image purposes this API version utilizes or supports only GET POST and PUT methods.
 
 #### Authentication
 - PhotoUp will generate Public Key and Secret Key for third party client
-- This Keys will be used for authenticating every request both for
-PhotoUp and for the thirdparty
-- The API client and PhotoUp must provide PU-API-Public-Key in the
-header (The Key here is the Public key)
+- This Keys will be used for authenticating every request both for PhotoUp and for the thirdparty
+- The API client and PhotoUp must provide PU-API-Public-Key in the header (The Key here is the Public key)
 - The API client and PhotoUp must provide PU-API-Timestamp in the header
 - The API client and PhotoUp must provide PU-API-Signature in the header
  - The signature is made by hashing components concatenated by a dash
@@ -44,8 +48,7 @@ header (The Key here is the Public key)
             $method = strtoupper($method);
 
             $signature_components = array(PUBLIC_KEY, $timestamp);
-            $signature = hash_hmac("sha256", implode("\n",
-$signature_components), SECRET_KEY);
+            $signature = hash_hmac("sha256", implode("\n", $signature_components), SECRET_KEY);
 
             $headers = array(
                 "PU-API-Public-Key: ".PUBLIC_KEY,
@@ -91,8 +94,7 @@ $signature_components), SECRET_KEY);
             }
 
             $signature_components = array($received_api_key, $received_api_timestamp);
-            $expected_signature = hash_hmac("sha256", implode("\n",
-$signature_components), PUBLIC_KEY);
+            $expected_signature = hash_hmac("sha256", implode("\n", $signature_components), PUBLIC_KEY);
 
             if($expected_signature == $received_api_sign) {
                 return true;
@@ -109,12 +111,14 @@ response should be either in status code
 200, 201 or 204
  - with or without response data. If there is a response data the
 format would always be in
- -  ``` {"message": "success", .....more data if applicable... }```
+-  ``` {"message": "success", .....more data if applicable... }```
 - On Failure, status code is either in 4xx or 5xx and in format of
 -  ``` {"errors": "String of The Error Message" }```
 
 #### DeliverImage Endpoints: Resources
 | Endpoint | Param | Description |
+|-|-|-|
+| PUT /link/<third_party_short_name> | {"sk": "kl12j3jkl12j3h12jh", "pk":"jk2jjk589sthdv614"}| sk and pk are provided by photoup on redirecting to signup/login page of the third party website. PhotoUp will provide the third party short name as a constant when PhotoUp and the thirdparty decided to do an integration. |
 |-|-|-|
 | GET /home | | List out deliverable homes/properties. For response example See [Example Responses](#example-responses). |
 |-|-|-|
