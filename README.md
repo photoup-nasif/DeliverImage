@@ -1,8 +1,8 @@
 PhotoUp DeliverImage API V1.0.0
 
-* [Connecting Third Party and PhotoUp Accounts](#connecting-third-party-and-photoup-accounts)
 * [Introduction to Restful API endpoints](#introduction-to-restful-api-endpoints)
 * [Introduction to DeliverImage API](#introduction-to-deliverimage-api)
+* [Connecting Third Party and PhotoUp Accounts](#connecting-third-party-and-photoup-accounts)
 * [Authentication](#authentication)
 * [Request and Response](#request-and-response)
 * [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources)
@@ -10,15 +10,6 @@ PhotoUp DeliverImage API V1.0.0
 * [Parameter Objects](#parameter-objects)
 * [Third Party Endpoint Requirements](#third-party-endpoint-requirements)
 * [Third Party Duplicate Image Protocols](#third-party-duplicate-image-protocol)
-
-#### Connecting Third Party and PhotoUp Accounts
-Clients will login into PhotoUp account and they can link the two accounts once inside PhotoUp. The steps will be as follows
-1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup?pk=somecharacter&sk=somecharacter```
-    1. PhotoUp will add a get variables pk and sk in the link. This is the one time Public key and Private key for each Client.
-    2. PhotoUp will only save the pk and sk once the link of two accounts is successful.
-    	1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /signup and also add the pk and sk in the payload.
-    	2. When the client choose to login, once logged in, the third party also needs to call PUT/signup to inform PhotoUp that the third party got the request and linked the account. 
-    3. When the third party has successfully called the PUT /signup, PhotoUp will then close the third party page from no. 1 above and proceed to Delivery form.
 
 #### Introduction to Restful API endpoints
 Endpoints can be access with http verbs: GET, POST, PUT, and DELETE
@@ -30,6 +21,15 @@ Endpoints can be access with http verbs: GET, POST, PUT, and DELETE
 
 #### Introduction to DeliverImage API
 This API is a guide and a requirement for the third party service  provider so that PhotoUp can upload images directly to the third party platform. For Delivery image purposes this API version utilizes or supports only GET POST and PUT methods.
+
+#### Connecting Third Party and PhotoUp Accounts
+Clients will login into PhotoUp account and they can link the two accounts once inside PhotoUp. The steps will be as follows
+1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup?pk=somecharacter&sk=somecharacter```
+    1. PhotoUp will add a get variables pk and sk in the link. This is the one time Public key and Private key for each Client.
+    2. PhotoUp will only save the pk and sk once the link of two accounts is successful.
+    	1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /signup see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and also add the pk and sk in the payload.
+    	2. When the client choose to login, once logged in, the third party also needs to call PUT/signup to inform PhotoUp that the third party got the request and linked the account. 
+    3. When the third party has successfully called the PUT /signup, PhotoUp will then close the third party page from no. 1 above and proceed to Delivery form.
 
 #### Authentication
 - PhotoUp will generate Public Key and Secret Key for third party client
