@@ -10,6 +10,7 @@ PhotoUp DeliverImage API V1.0.0
 * [Parameter Objects](#parameter-objects)
 * [Third Party Endpoint Requirements](#third-party-endpoint-requirements)
 * [Third Party Duplicate Image Protocols](#third-party-duplicate-image-protocol)
+* [Short Flow Summary](#short-flow-summary)
 
 #### Introduction to Restful API endpoints
 Endpoints can be access with http verbs: GET, POST, PUT, and DELETE
@@ -300,5 +301,10 @@ Photoup provided image_id and version(See [Example Responses](#example-responses
 When duplicate happens, The third party should replace(or delete and add) the image with the sent payload if its a newer version. 
 When its not duplicate, the third party should add the image as new image in the property.
 
-
+#### Short Flow Summary 
+1. The Client will need to link the account see [Connecting Third Party and PhotoUp Accounts](#connecting-third-party-and-photoup-accounts).
+2. Once the account is connected the client can transfer images from PhotoUp to the third party by:
+	1. Pulling images from the third party - The client is on the third party website and then he is shown which PhotoUp 'home' photos to pull and store in the Third party 'property'. The third party needs to inform PhotoUp if the transfer is a success or a failure.
+	2. Pushing images from PhotoUp. The client can go to PhotoUp's Home info page and choose which property from a given list to do the transfer. The third party needs to inform PhotoUp if the transfer is a success or a failure.
+	
 
