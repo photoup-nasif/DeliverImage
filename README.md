@@ -25,12 +25,17 @@ This API is a guide and a requirement for the third party service  provider so t
 
 #### Connecting Third Party and PhotoUp Accounts
 Clients will login into PhotoUp account and they can link the two accounts once inside PhotoUp. The steps will be as follows
-1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup?pk=somecharacter&sk=somecharacter```
-    1. PhotoUp will add a get variables pk and sk in the link. This is the one time Public key and Private key for each Client.
-    2. PhotoUp will only save the pk and sk once the link of two accounts is successful.
-    	1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /link/success see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and also add the pk and sk in the payload.
-    	2. When the client choose to login, once logged in, the third party also needs to call PUT /link/success to inform PhotoUp that the third party got the request and linked the account. 
-    3. When the third party has successfully called the PUT /link/success, PhotoUp will then close the third party page from no.1 above and proceed to Delivery form.
+1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup```
+    1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /link/success see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and also add the pk and sk in the payload.
+    2. When the client choose to login, once logged in, the third party also needs to call PUT /link/success with posted pk and sk to inform PhotoUp that the third party got the request and linked the account. 
+2. When the third party has successfully called the PUT /link/success, PhotoUp will then close the third party page from no.1 above and proceed to Delivery form.
+    1. Third Party will generate pk and sk for each client.
+    
+- Example of calling put /link/success
+```
+$data = array("sk" => $thirdparty_sk,"pk" => $thirdparty_pk);
+$this->connectToPhotoUp("POST", "https://www.photoup.net/deliverImage/link/success" , $data);
+```
 
 #### Authentication
 - PhotoUp will generate Public Key and Secret Key for third party client
@@ -181,16 +186,19 @@ format would always be in
 			"home_rating": 9,                                                      // 1 to 10 rating of the photographer to PhotoUp's editing
 			"home_status": "Ready",                                                // Available status are: Ready, Processing, and Revision, and Recent for data length issues, we will not show/support Archive status homes
 			"home_ordered": "Y-m-d H:i:s",                                         // UTC timezone when the client ordered editing in PhotoUp
+			"home_deadline": "Y-m-d H:i:s",                                        // UTC timezone of the quoted deadline when ordering in PhotoUp
 			"home_delivered": "Y-m-d H:i:s",                                       // UTC timezone when PhotoUp have submitted the order initially to the client
 			"Photographer": "John Doe",                                            // The name of the photographer/client that have uploaded this home in PhotoUp
 			"Clients": [                                                           // Can be empty. Details of clients that are tagged for the home when ordering in PhotoUp.
 				{
-					"name": "Donna Smith",
-					"email": "donna@gmail.com"
+					"client_name": "Donna Smith",
+					"client_email": "donna@gmail.com",
+					"client_client_phone": "888-330-1235"
 				},
 				{
-					"name": "Kirk White",
-					"email": "kirk@gmail.com"
+					"client_name": "Kirk White",
+					"client_email": "kirk@gmail.com",
+					"client_phone": "888-330-1234"
 				}
 			]
 		},
@@ -248,20 +256,23 @@ format would always be in
 			"image_version": 1,
 			"image_url": "https://www.photoup.net/app/deliverImage/677625"
 		}
-	]
+	],
 	"home_rating": 9,
 	"home_status": "Ready",
 	"home_ordered": "Y-m-d H:i:s",
+	"home_deadline": "Y-m-d H:i:s",
 	"home_delivered": "Y-m-d H:i:s",
 	"Photographer": "John Doe",
 	"Clients": [
 		{
-			"name": "Donna Smith",
-			"email": "donna@gmail.com"
+			"client_name": "Donna Smith",
+			"client_email": "donna@gmail.com",
+			"client_phone": "888-330-1235"
 		},
 		{
-			"name": "Kirk White",
-			"email": "kirk@gmail.com"
+			"client_name": "Kirk White",
+			"client_email": "kirk@gmail.com",
+			"client_phone": "888-330-1234"
 		}
 	]
 }
@@ -282,7 +293,7 @@ Third party will share the same PUBLIC and SECRET keys, such that the third part
 | Short name | Endpoint | Data from PhotoUp | Description |
 |-|-|-|-|
 | list property | GET /property | {"siteID": "PhotoUp"} |  PhotoUp will call this endpoint so that we can show the client the list of property he/she can transfer image to. |
-| new property delivery | PUT /property | see below| PhotoUp will call this endpoint when delivering images to the specified tour. This will also create a new property on the third party |
+| new property delivery | POST /property | see below| PhotoUp will call this endpoint when delivering images to the specified tour. This will also create a new property on the third party |
 | existing property delivery | PUT /property/12345 | see below| PhotoUp will call this endpoint when delivering images to the specified tour. |
 |-|-|-|-|
 
@@ -318,41 +329,45 @@ Third party will share the same PUBLIC and SECRET keys, such that the third part
 }
 ```
 
-- Payload for ```PUT /property```
+- Payload for ```POST /property```
 ```
 {
-		"siteID": "PhotoUp", 
-		"property_id": 1235, // the id of the third party property
-        "home_id": 53831,
-        "home_name": "123 Main Street",
-        "home_images": [
-                {
-                        "image_id": 677568,
-                        "image_name": "Dining Room.jpg",
-                        "image_version": 1,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677568"
-                },
-                {
-                        "image_id": 677576,
-                        "image_name": "Lawn.jpg",
-                        "image_version": 2,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677576"
-                },
-                {
-                        "image_id": 677625,
-                        "image_name": "Kitchen.jpg",
-                        "image_version": 1,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677625"
-                }
-        ]
+	"siteID": "PhotoUp", 
+	"property_street": "#41 Kingfisher Street", // new property's street
+	"property_city": "Los Angeles",             // new property's city
+	"property_state": "California",             // new property's state
+	"property_zip": "90003",                    // new property's zip
+	"property_country": "United States",        // new property's Country
+	"home_id": 53831,
+	"home_name": "123 Main Street",
+	"home_images": [
+		{
+			"image_id": 677568,
+			"image_name": "Dining Room.jpg",
+			"image_version": 1,
+			"image_url": "https://www.photoup.net/app/deliverImage/677568"
+		},
+		{
+			"image_id": 677576,
+			"image_name": "Lawn.jpg",
+			"image_version": 2,
+			"image_url": "https://www.photoup.net/app/deliverImage/677576"
+		},
+		{
+			"image_id": 677625,
+			"image_name": "Kitchen.jpg",
+			"image_version": 1,
+			"image_url": "https://www.photoup.net/app/deliverImage/677625"
+		}
+	]
 }
 ```
 
 - Payload for ```PUT /property/12345```
 ```
 {
-		"siteID": "PhotoUp", 
-		"property_name": "My new Third Party property name", // the id of the third party property
+	"siteID": "PhotoUp", 
+	"property_id": 1235, // the id of the third party property
         "home_id": 53831,
         "home_name": "123 Main Street",
         "home_images": [
