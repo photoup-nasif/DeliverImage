@@ -193,12 +193,14 @@ format would always be in
 				{
 					"client_name": "Donna Smith",
 					"client_email": "donna@gmail.com",
-					"client_client_phone": "888-330-1235"
+					"client_phone": "",
+					"client_company": ""
 				},
 				{
-					"client_name": "Kirk White",
-					"client_email": "kirk@gmail.com",
-					"client_phone": "888-330-1234"
+					"client_name": "Tony Stark",
+					"client_email": "ironman@avengers.org",
+					"client_phone": "888-330-1234",
+					"client_company": "Stark Industries"
 				}
 			]
 		},
@@ -216,13 +218,13 @@ format would always be in
 				}
 				...
 				...
-				..
+				...
 			],
 			"home_rating": 9, 
 			"home_status": "Revision", 
 			"home_ordered": "Y-m-d H:i:s", 
 			"home_delivered": "Y-m-d H:i:s", 
-			"Photographer": "Tony Stark",      
+			"Photographer": "Bruce Banner",      
 			"Clients": []
 		}
 	]
@@ -267,12 +269,14 @@ format would always be in
 		{
 			"client_name": "Donna Smith",
 			"client_email": "donna@gmail.com",
-			"client_phone": "888-330-1235"
+			"client_phone": "",
+			"client_company": ""
 		},
 		{
-			"client_name": "Kirk White",
-			"client_email": "kirk@gmail.com",
-			"client_phone": "888-330-1234"
+			"client_name": "Tony Stark",
+			"client_email": "ironman@avengers.org",
+			"client_phone": "888-330-1234",
+			"client_company": "Stark Industries"
 		}
 	]
 }
