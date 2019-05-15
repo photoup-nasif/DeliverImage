@@ -26,18 +26,18 @@ This API is a guide and a requirement for the third party service  provider so t
 #### Connecting Third Party and PhotoUp Accounts
 Clients will login into PhotoUp account and they can link the two accounts once inside PhotoUp. The steps will be as follows
 1. The client will click a connection link inside PhotoUp and it will open a new tab showing the thirdparty signup/login page. If the client signs up a new account: example thirdparty signup link ```https://thirdparty.com/signup?otp=somechars```
-    1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /link/success see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and add the otp, and pk in the payload. The otp is one time password that will be used by PhotoUp to determine on /link/success which PhotoUp account is doing the 'link'.
-    2. When the client choose to login, once logged in, the third party also needs to call PUT /link/success with posted otp, pk to inform PhotoUp that the third party got the request and linked the account. 
+    1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /link/success see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and add the otp, and public_key in the payload. The otp is one time password that will be used by PhotoUp to determine on /link/success which PhotoUp account is doing the 'link'.
+    2. When the client choose to login, once logged in, the third party also needs to call PUT /link/success with posted otp, public_key to inform PhotoUp that the third party got the request and linked the account. 
 2. When the third party has successfully called the PUT /link/success, PhotoUp will then close the third party page from no.1 above and proceed to Delivery form.
     
 - Example of calling put /link/success
 ```
-$data = array("otp" => "puaj8918jhDj8275jkA", "pk" => $thirdparty_pk);
+$data = array("otp" => "puaj8918jhDj8275jkA", "public_key" => $thirdparty_pk);
 $this->connectToPhotoUp("POST", "https://www.photoup.net/deliverImage/link/success" , $data);
 ```
 
 #### Authentication
-- On Initial Integration agreement, PhotoUp and the Third party will decide on universal Private Key
+- On Initial Integration agreement, PhotoUp and the Third party will decide on universal SECRET Key
 - Third Party will generate Public Key which is unique per account and send it to PhotoUp when linking accounts
 - This Keys will be used for authenticating every request both for PhotoUp and for the thirdparty
 - The API client and PhotoUp must provide PU-API-Public-Key in the header (The Key here is the Public key)
