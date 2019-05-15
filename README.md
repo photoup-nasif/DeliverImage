@@ -29,7 +29,6 @@ Clients will login into PhotoUp account and they can link the two accounts once 
     1. When the client choose to signup and when the signup is successful, the client will be informed that the accounts are link. For this to happen the third party will have to call PUT /link/success see [DeliverImage Endpoints: Resources](#deliverimage-endpoints-resources) and also add the pk and sk in the payload.
     2. When the client choose to login, once logged in, the third party also needs to call PUT /link/success with posted pk and sk to inform PhotoUp that the third party got the request and linked the account. 
 2. When the third party has successfully called the PUT /link/success, PhotoUp will then close the third party page from no.1 above and proceed to Delivery form.
-    1. Third Party will generate pk and sk for each client.
     
 - Example of calling put /link/success
 ```
@@ -38,7 +37,7 @@ $this->connectToPhotoUp("POST", "https://www.photoup.net/deliverImage/link/succe
 ```
 
 #### Authentication
-- PhotoUp will generate Public Key and Secret Key for third party client
+- Third Party will generate Public Key and Secret Key and send it to PhotoUp when linking accounts
 - This Keys will be used for authenticating every request both for PhotoUp and for the thirdparty
 - The API client and PhotoUp must provide PU-API-Public-Key in the header (The Key here is the Public key)
 - The API client and PhotoUp must provide PU-API-Timestamp in the header
