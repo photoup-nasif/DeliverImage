@@ -404,7 +404,7 @@ party can implement the same authentication checking. see
 }
 ```
 
-Third party responses for PUT /property/ OR PUT /property/12345 can be:
+Third party responses for POST /property/ OR PUT /property/12345 can be:
 ```
 {"message": "success"}//200 OK
 ```
