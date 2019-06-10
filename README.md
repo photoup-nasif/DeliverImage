@@ -299,8 +299,8 @@ party can implement the same authentication checking. see
 
 | Short name | Endpoint | Data from PhotoUp | Description |
 |-|-|-|-|
-| list property | GET /property | {"siteID": "PhotoUp"} |  PhotoUp will call this endpoint so that we can show the client the list of  property he/she can transfer image to. Headers mentioned in
-[Authentication](#authentication) is required for this call. |
+| list property | GET /property | {"siteID": "PhotoUp"} |  PhotoUp will call this endpoint so that we can show the client the list of  property he/she can transfer image to. Headers mentioned in [Authentication](#authentication) is required for this call. |
+|-|-|-|-|
 | new property delivery | POST /property | see below| PhotoUp will call this endpoint when delivering images to the specified tour. This will  also create a new property on the third party. Headers mentioned in [Authentication](#authentication) is required for this call. |
 | existing property delivery | PUT /property/12345 | see below| PhotoUp will call this endpoint when delivering images to the specified tour.  Headers mentioned in [Authentication](#authentication) is required for this call. |
 |-|-|-|-|
