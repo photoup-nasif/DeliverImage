@@ -37,7 +37,7 @@ Clients will login into PhotoUp account and they can connect the two accounts on
 - Example of calling put /connect/success
 ```
 $data = array("public_key" => $thirdparty_public_key);
-$this->connectToPhotoUp("PUT", "https://www.photoup.net/deliverImage/connect/success" , $data);
+$this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect/success" , $data);
 ```
 
 #### Authentication
