@@ -134,6 +134,12 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
 | GET /home/1234 || Grab Edited image's URL for home id 1234. For response example See [Example Responses](#example-responses). Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 |-|-|-|
+| GET /displayPhoto/1234 || View/download the edited image. Headers mentioned in [Authentication](#authentication) is required for this call. |
+|| siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
+|-|-|-|
+| GET /displayPhoto/1234/thumbs || View/download the edited image in thumbnail size. Headers mentioned in [Authentication](#authentication) is required for this call. |
+|| siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
+|-|-|-|
 | PUT /home/1234/failedDelivery | | Third party must notify PhotoUp when PhotoUp delivery for edited images is not successful. PhotoUp will then look for the problems in delivery and will send delivery/submit request with all of the images again to the third party. See [Third Party Endpoint Requirements](#third-party-endpoint-requirements). See [Parameter Objects](#parameter-objects). Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 || errors | (String) Required. Text description of error(s) |
@@ -162,21 +168,21 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
                     "image_name": "Dining Room.jpg",                                // The image file name
                     "image_title": "Modern Style Dining Area",                      // Optional. Third Party can use this instead of file name
                     "image_version": 3,                                             // Shows how many version the image have due to revision. First revision will say version of 2
-                    "image_url": "https://www.photoup.net/app/deliverImage/677568"  // PhotoUp will provide the latest version always although the url will be the same.
+                    "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677568"  // PhotoUp will provide the latest version always although the url will be the same.
                 },
                 {
                     "image_id": 677576,
                     "image_name": "Lawn.jpg",
                     "image_title": "",
                     "image_version": 2,
-                    "image_url": "https://www.photoup.net/app/deliverImage/677576"
+                    "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677576"
                 },
                 {
                     "image_id": 677625,
                     "image_name": "Kitchen.jpg",
                     "image_title": "A Big Kitchen",
                     "image_version": 1,
-                    "image_url": "https://www.photoup.net/app/deliverImage/677625"
+                    "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677625"
                 }
             ],
             "home_rating": 9,                   // 1 to 10 rating of the photographer to PhotoUp's editing
@@ -210,7 +216,7 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
                     "image_name": "Front Yard.jpg",
                     "image_title": "",
                     "image_version": 1,
-                    "image_url": "https://www.photoup.net/app/deliverImage/677568"
+                    "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677568"
                 }
                 ...
                 ...
@@ -238,21 +244,21 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
             "image_name": "Dining Room.jpg",
             "image_title": "Modern Style Dining Area",
             "image_version": 3,
-            "image_url": "https://www.photoup.net/app/deliverImage/677568"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677568"
         },
         {
             "image_id": 677576,
             "image_name": "Lawn.jpg",
             "image_title": "",
             "image_version": 2,
-            "image_url": "https://www.photoup.net/app/deliverImage/677576"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677576"
         },
         {
             "image_id": 677625,
             "image_name": "Kitchen.jpg",
             "image_title": "A Big Kitchen",
             "image_version": 1,
-            "image_url": "https://www.photoup.net/app/deliverImage/677625"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677625"
         }
     ],
     "home_rating": 9,
@@ -353,19 +359,19 @@ party can implement the same authentication checking. see
             "image_id": 677568,
             "image_name": "Dining Room.jpg",
             "image_version": 1,
-            "image_url": "https://www.photoup.net/app/deliverImage/677568"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677568"
         },
         {
             "image_id": 677576,
             "image_name": "Lawn.jpg",
             "image_version": 2,
-            "image_url": "https://www.photoup.net/app/deliverImage/677576"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677576"
         },
         {
             "image_id": 677625,
             "image_name": "Kitchen.jpg",
             "image_version": 1,
-            "image_url": "https://www.photoup.net/app/deliverImage/677625"
+            "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677625"
         }
     ]
 }
@@ -383,19 +389,19 @@ party can implement the same authentication checking. see
                         "image_id": 677568,
                         "image_name": "Dining Room.jpg",
                         "image_version": 1,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677568"
+                        "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677568"
                 },
                 {
                         "image_id": 677576,
                         "image_name": "Lawn.jpg",
                         "image_version": 2,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677576"
+                        "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677576"
                 },
                 {
                         "image_id": 677625,
                         "image_name": "Kitchen.jpg",
                         "image_version": 1,
-                        "image_url": "https://www.photoup.net/app/deliverImage/677625"
+                        "image_url": "https://www.photoup.net/app/deliverImage/displayPhoto/677625"
                 }
         ]
 }
