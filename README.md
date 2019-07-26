@@ -141,6 +141,7 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 |-|-|-|
 | PUT /home/1234/rating || Updates the rating of given home with id = 1234. |
+|| siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 || rate | (Int) Required. 1-10. The new/final rating. This can be updated by third party if wanted. |
 || editing_feedback | (String) Optional but Required if rate is 7 or below. The feedback from the third party to result of editing. |
 |-|-|-|
