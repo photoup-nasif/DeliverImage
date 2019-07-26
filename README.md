@@ -140,6 +140,10 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
 | GET /displayPhoto/1234/thumbs || View/download the edited image in thumbnail size. Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 |-|-|-|
+| PUT /home/1234/rating || Updates the rating of given home with id = 1234. |
+|| rate | (Int) Required. 1-10. The new/final rating. This can be updated by third party if wanted. |
+|| editing_feedback | (String) Optional but Required if rate is 7 or below. The feedback from the third party to result of editing. |
+|-|-|-|
 | PUT /home/1234/failedDelivery | | Third party must notify PhotoUp when PhotoUp delivery for edited images is not successful. PhotoUp will then look for the problems in delivery and will send delivery/submit request with all of the images again to the third party. See [Third Party Endpoint Requirements](#third-party-endpoint-requirements). See [Parameter Objects](#parameter-objects). Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 || errors | (String) Required. Text description of error(s) |
