@@ -140,7 +140,7 @@ $this->connectToPhotoUp("PUT", "https://www.photoup.net/app/deliverImage/connect
 | GET /displayPhoto/1234/thumbs || View/download the edited image in thumbnail size. Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 |-|-|-|
-| PUT /home/1234/rating || Updates the rating of given home with id = 1234. |
+| PUT /home/1234/rating || Updates the rating of given home with id = 1234. Headers mentioned in [Authentication](#authentication) is required for this call. |
 || siteID | (String) Required. PhotoUp and the third Party will decide on the third party's siteID. |
 || rate | (Int) Required. 1-10. The new/final rating. This can be updated by third party if wanted. |
 || editing_feedback | (String) Optional but Required if rate is 7 or below. The feedback from the third party to result of editing. |
